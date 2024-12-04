@@ -51,9 +51,21 @@ body {
 	font-size: 3rem;
 	font-family: monospace;
 	color: #ca2c92;
+	position: relative;
 
 	&:hover {
 		cursor: pointer;
 		color: #ca2c93ca;
+	}
+}
+
+.copy-icon {
+	width: 1.7rem;
+	height: 1.7rem;
+	position: absolute;
+
+	&:hover {
+		opacity: 1;
+		cursor: pointer;
 	}
 }

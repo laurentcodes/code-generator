@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
 import { toast } from 'sonner';
 
+import copy from '../assets/copy.svg';
+
 const CodeGenerator = () => {
 	const [code, setCode] = useState('');
 	const [timeLeft, setTimeLeft] = useState(30);
@@ -83,6 +85,7 @@ const CodeGenerator = () => {
 				}}
 			>
 				{code.slice(0, 3)} {code.slice(3, 8)}
+				<img className='copy-icon' src={copy} alt='Copy' />
 			</div>
 		</div>
 	);
