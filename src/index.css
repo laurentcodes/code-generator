@@ -51,4 +51,9 @@ body {
 	font-size: 3rem;
 	font-family: monospace;
 	color: #ca2c92;
+
+	&:hover {
+		cursor: pointer;
+		color: #ca2c93ca;
+	}
 }

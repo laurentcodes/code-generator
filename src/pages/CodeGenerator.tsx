@@ -1,11 +1,12 @@
 import { useState, useEffect } from 'react';
+import { toast } from 'sonner';
 
 const CodeGenerator = () => {
 	const [code, setCode] = useState('');
 	const [timeLeft, setTimeLeft] = useState(30);
 
 	const generateCode = () => {
-		const newCode = Math.floor(100 + Math.random() * 900).toString();
+		const newCode = Math.floor(100000 + Math.random() * 900000).toString();
 
 		setCode(newCode);
 		setTimeLeft(30);
@@ -73,7 +74,16 @@ const CodeGenerator = () => {
 			</div>
 
 			<h3 className='code-message'>Your Access Code is:</h3>
-			<div className='code-display'>{code}</div>
+			<div
+				className='code-display'
+				onClick={() => {
+					navigator.clipboard.writeText(code);
+
+					toast.success('Copied to clipboard!');
+				}}
+			>
+				{code.slice(0, 3)} {code.slice(3, 8)}
+			</div>
 		</div>
 	);
 };
