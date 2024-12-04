@@ -72,6 +72,7 @@ const CodeGenerator = () => {
 				</svg>
 			</div>
 
+			<h3 className='code-message'>Your Access Code is:</h3>
 			<div className='code-display'>{code}</div>
 		</div>
 	);

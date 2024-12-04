@@ -41,8 +41,13 @@ body {
 	font-weight: bold;
 }
 
-.code-display {
+.code-message {
 	margin-top: 1rem;
+	text-align: center;
+	color: #333;
+}
+
+.code-display {
 	font-size: 3rem;
 	font-family: monospace;
 	color: #ca2c92;
