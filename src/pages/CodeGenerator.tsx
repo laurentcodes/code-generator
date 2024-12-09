@@ -1,26 +1,38 @@
 import { useState, useEffect } from 'react';
 import { toast } from 'sonner';
 
+// query
+import { useQuery } from '@tanstack/react-query';
+
+// icons
 import copy from '../assets/copy.svg';
+import logoutIcon from '../assets/logout.svg';
+
+// store
+import { authStore } from '../store';
+
+// services
+import { generateCode } from '../api/code';
 
 const CodeGenerator = () => {
-	const [code, setCode] = useState('');
+	const { user, logout } = authStore((state) => state);
+
 	const [timeLeft, setTimeLeft] = useState(30);
 
-	const generateCode = () => {
-		const newCode = Math.floor(100000 + Math.random() * 900000).toString();
-
-		setCode(newCode);
-		setTimeLeft(30);
-	};
+	const { data, refetch, isLoading } = useQuery({
+		queryKey: ['code'],
+		queryFn: generateCode,
+		refetchInterval: false,
+		refetchOnWindowFocus: false,
+		select: (data) => data.data.code.toString(),
+	});
 
 	useEffect(() => {
-		generateCode();
-
 		const intervalId = setInterval(() => {
 			setTimeLeft((prev) => {
 				if (prev <= 1) {
-					generateCode();
+					// Refetch when timer reaches 0
+					refetch();
 					return 30;
 				}
 
@@ -29,15 +41,26 @@ const CodeGenerator = () => {
 		}, 1000);
 
 		return () => clearInterval(intervalId);
-	}, []);
+	}, [refetch]);
 
 	const radius = 50;
 	const circumference = 2 * Math.PI * radius;
 	const progress = circumference - (timeLeft / 30) * circumference;
 
+	if (isLoading) {
+		return <div>Loading...</div>;
+	}
+
 	return (
 		<div className='code-generator-container'>
-			<h3 className='code-generator-title'>Hello, Segun!</h3>
+			<img
+				className='logout-icon'
+				src={logoutIcon}
+				alt='Logout'
+				onClick={logout}
+			/>
+
+			<h3 className='code-generator-title'>Hello, {user?.account}!</h3>
 
 			<div className='timer-container'>
 				<svg className='timer-svg' viewBox='0 0 120 120'>
@@ -79,12 +102,11 @@ const CodeGenerator = () => {
 			<div
 				className='code-display'
 				onClick={() => {
-					navigator.clipboard.writeText(code);
-
+					navigator.clipboard.writeText(data.code);
 					toast.success('Copied to clipboard!');
 				}}
 			>
-				{code.slice(0, 3)} {code.slice(3, 8)}
+				{data?.slice(0, 3)} {data?.slice(3, 8)}
 				<img className='copy-icon' src={copy} alt='Copy' />
 			</div>
 		</div>

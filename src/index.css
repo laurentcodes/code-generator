@@ -17,6 +17,7 @@ body {
 	align-items: center;
 	justify-content: center;
 	height: 100vh;
+	position: relative;
 }
 
 .code-generator-title {
@@ -63,6 +64,21 @@ body {
 	width: 1.7rem;
 	height: 1.7rem;
 	position: absolute;
+
+	&:hover {
+		opacity: 1;
+		cursor: pointer;
+	}
+}
+
+.logout-icon {
+	position: absolute;
+	top: 1rem;
+	right: 1rem;
+	height: 1.6rem;
+	width: 1.6rem;
+	cursor: pointer;
+	opacity: 0.9;
 
 	&:hover {
 		opacity: 1;
